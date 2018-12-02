@@ -7,81 +7,68 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 
 public class Draw extends View {
 
-    private String drawType;
-
-    private Position startPosition;
-    private Position endPosition;
+    private Drawables toDraw;
     private Paint brush;
+    public LinkedList<Drawables> ldrawables;
 
     public Draw(Context context){
         super(context);
-        setDrawType("Line");
+
         brush = new Paint();
         brush.setStrokeWidth(3);
         brush.setColor(Color.BLACK);
         brush.setStyle(Paint.Style.STROKE);
-        setWillNotDraw(false);
-        startPosition = new Position(0,0);
-        endPosition = new Position(0,0);
+        ldrawables = new LinkedList<>();
+
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.v("ScreenPressed",  " Drawing1?!");
+
         super.onDraw(canvas);
+//        canvas.save();
+//
+        Iterator<Drawables> itr = ldrawables.iterator();
 
-        float radius = getRadius();
+        while(itr.hasNext()) {
+            drawableToDraw(canvas, itr.next());
+        }
 
-        canvas.drawLine(startPosition.getLine(), startPosition.getCol(), endPosition.getLine(),endPosition.getCol(), brush);
-        canvas.drawCircle(startPosition.getLine(),startPosition.getCol(),radius, brush );
-        canvas.drawRect(startPosition.getLine(), startPosition.getCol(), endPosition.getLine(),endPosition.getCol(), brush);
+        drawableToDraw(canvas, toDraw);
+
         Log.v("ScreenPressed",  " Drawing2?!");
     }
 
-    private float getRadius() {
-
-        float xlength = abs(startPosition.getLine() - endPosition.getLine());
-        float ylength = abs(startPosition.getCol() - endPosition.getCol());
-
-        return (float)sqrt(xlength*xlength + ylength*ylength);
-
+    private void drawableToDraw(Canvas canvas, Drawables toDraw){
+        if(toDraw instanceof Line) {
+            canvas.drawLine(toDraw.getStartPosition().getLine(), toDraw.getStartPosition().getCol(), toDraw.getEndPosition().getLine(), toDraw.getEndPosition().getCol(), brush);
+        }
+        else if(toDraw instanceof Circle){
+            canvas.drawCircle(toDraw.getStartPosition().getLine(),toDraw.getStartPosition().getCol(),toDraw.getRadius(), brush );
+        }
+        else if(toDraw instanceof Rectangular){
+            canvas.drawRect(toDraw.getStartPosition().getLine(), toDraw.getStartPosition().getCol(), toDraw.getEndPosition().getLine(), toDraw.getEndPosition().getCol(), brush);
+        }
+        else if(toDraw instanceof Pixel){
+            brush.setStrokeWidth(9);
+            canvas.drawPoint(toDraw.endPosition.getLine(), toDraw.endPosition.getCol(), brush);
+            brush.setStrokeWidth(3);
+        }
     }
 
-    public void repaint(){
-//        endPosition = newPos;
+    public void repaint(Drawables drawable){
+        this.toDraw = drawable;
+
         this.invalidate();
         Log.v("ScreenPressed",  " Invalidate?!");
     }
-
-    public void setDrawType(String drawType) {
-        this.drawType = drawType;
-    }
-
-
-    public void setStartPosition(Position startPos) {
-        this.startPosition = startPos;
-
-    }
-
-    public void setEndPosition(Position endPos) {
-
-        this.endPosition = endPos;
-        Log.v("ScreenPressed", Float.toString(startPosition.getLine()) + ", " + Float.toString(startPosition.getCol()) + " Painting - startPos");
-        Log.v("ScreenPressed", Float.toString(endPos.getLine()) + ", " + Float.toString(endPos.getCol()) + " Painting - EdnPos");
-//        repaint();
-        this.invalidate();
-    }
-
-
-
-  //  public void setBrush(Paint brush) {
-//        this.brush = brush;
-//    }
 
 
 }

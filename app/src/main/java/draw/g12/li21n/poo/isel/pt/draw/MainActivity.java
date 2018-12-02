@@ -3,6 +3,7 @@ package draw.g12.li21n.poo.isel.pt.draw;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,17 +15,24 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final float BUTTON_TEXT_SIZE = 30;
 
     private  Draw draw;
+    private Drawables toDraw;
+    private LinkedList<Drawables> drawablesList;
+    RadioButton radioButtonChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         draw = new Draw(this);
+        drawablesList = new LinkedList<>();
         buildView();
 
 
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             lineRadio.setChecked(true);
+            radioButtonChecked = lineRadio;
 
             buttonPanel.addView(resetButton);
             buttonPanel.addView(loadButton);
@@ -89,33 +98,7 @@ public class MainActivity extends AppCompatActivity {
             drawPanel.setBackgroundColor(Color.parseColor("#D3F2EE"));
             drawPanel.addView(draw);
 
-           drawPanel.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
 
-                    final int action = event.getAction();
-
-
-                    if(action == MotionEvent.ACTION_DOWN){
-                        Log.v("ScreenPressed", "Down");
-                        pushed  = true;
-                        draw.setStartPosition(new Position(event.getX(), event.getY()));
-                        draw.setEndPosition(new Position(event.getX(), event.getY()));
-
-                    }
-                    else if(action == MotionEvent.ACTION_UP){
-                        Log.v("ScreenPressed", "Up");
-                        draw.setEndPosition(new Position(event.getX(), event.getY()));
-                        pushed = false;
-
-                    }
-                    else if(pushed && action == MotionEvent.ACTION_MOVE){
-                        draw.setEndPosition(new Position(event.getX(), event.getY()));
-
-                    }
-                    return true;
-                }
-            });
 
             rootPanel.addView(buttonPanel);
             rootPanel.addView(radioGroup);
@@ -131,10 +114,38 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                    RadioButton radioButton =findViewById(checkedId);
+                    radioButtonChecked =findViewById(checkedId);
 
-                    Log.v("RadioChecked", radioButton.getText().toString());
+                    Log.v("RadioChecked", radioButtonChecked.getText().toString());
 
+                }
+            });
+
+            drawPanel.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    final int action = event.getAction();
+
+
+                    if(action == MotionEvent.ACTION_DOWN){
+                        Log.v("ScreenPressed", "Down");
+                        pushed  = true;
+                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Position(event.getX(), event.getY()));
+                        init(toDraw);
+
+                    }
+                    else if(action == MotionEvent.ACTION_UP){
+                        Log.v("ScreenPressed", "Up");
+                        pushed  = false;
+                        draw.ldrawables.add(toDraw);
+
+                    }
+                    else if(pushed && action == MotionEvent.ACTION_MOVE){
+                        toDraw.setEndPosition(new Position(event.getX(), event.getY()));
+
+                    }
+                    return true;
                 }
             });
 
@@ -143,5 +154,23 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e){
             Log.e("buildingerrors", "Error building Layout", e);
         }
+    }
+
+
+    private void init(final Drawables drawable){
+        Drawables.DrawableListener listener = new Drawables.DrawableListener() {
+            @Override
+            public void EndPositionChanged(Position endPos) {
+                draw.repaint(toDraw);
+
+            }
+
+            @Override
+            public void PointCreated(Position position) {
+                draw.repaint(toDraw);
+            }
+        };
+        toDraw.setListener(listener);
+
     }
 }
