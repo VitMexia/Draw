@@ -11,4 +11,9 @@ public class Pixel extends Drawables {
         this.endPosition = pos;
         dListener.EndPositionChanged(pos);
     };
+
+    @Override
+    public String toString() {
+        return "P " + endPosition.toString();
+    }
 }

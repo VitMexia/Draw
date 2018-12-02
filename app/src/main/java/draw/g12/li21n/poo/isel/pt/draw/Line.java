@@ -8,4 +8,8 @@ public class Line extends Drawables {
     }
 
 
+    @Override
+    public String toString() {
+        return "L " + startPosition.toString() + " " + endPosition.toString();
+    }
 }

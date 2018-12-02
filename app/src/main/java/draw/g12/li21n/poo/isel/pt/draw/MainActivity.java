@@ -15,8 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private  Draw draw;
     private Drawables toDraw;
-    private LinkedList<Drawables> drawablesList;
+//    private LinkedList<Drawables> drawablesList;
     RadioButton radioButtonChecked;
 
     @Override
@@ -32,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         draw = new Draw(this);
-        drawablesList = new LinkedList<>();
+        //drawablesList = new LinkedList<>();
         buildView();
 
 
@@ -52,14 +59,39 @@ public class MainActivity extends AppCompatActivity {
             resetButton.setText("RESET");
             resetButton.setTextSize(BUTTON_TEXT_SIZE);
 
+            resetButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(draw.ldrawables != null)
+                        draw.ldrawables.clear();
+                    draw.repaint(null);
+                }
+            });
 
             final Button loadButton = new Button(this);
             loadButton.setText("LOAD");
             loadButton.setTextSize(BUTTON_TEXT_SIZE);
+            loadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadDrawing();
+                }
+            });
 
             final Button saveButton = new Button(this);
             saveButton.setText("SAVE");
             saveButton.setTextSize(BUTTON_TEXT_SIZE);
+
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    try{
+                        saveDrawing();
+//                }
+//                    catch (IOException e){
+//                    }
+                }
+            });
 
             final RadioGroup radioGroup = new RadioGroup(this);
             radioGroup.setOrientation(LinearLayout.HORIZONTAL);
@@ -157,12 +189,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     private void init(final Drawables drawable){
         Drawables.DrawableListener listener = new Drawables.DrawableListener() {
             @Override
             public void EndPositionChanged(Position endPos) {
                 draw.repaint(toDraw);
-
             }
 
             @Override
@@ -173,4 +205,51 @@ public class MainActivity extends AppCompatActivity {
         toDraw.setListener(listener);
 
     }
+
+    private void saveDrawing(){
+
+        try{
+        FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_APPEND);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+
+        if(draw.ldrawables != null && draw.ldrawables.size()>0 ){
+            bufferedWriter.write(draw.ldrawables.size());
+            bufferedWriter.newLine();
+            Log.v("BuildingFile", Integer.toString(draw.ldrawables.size()));
+            Iterator<Drawables> itr = draw.ldrawables.iterator();
+
+            while(itr.hasNext()){
+
+                String temp  =itr.next().toString() ;
+                bufferedWriter.write(temp);
+                Log.v("BuildingFile", temp);
+                bufferedWriter.newLine();
+            }
+
+            outputStream.close();
+
+        }
+        }
+        catch (IOException e){
+            Log.e("IoError", "ProblemSaving", e);
+        }
+    }
+
+    private void loadDrawing() {
+        try{
+
+            FileInputStream fileInputStream = openFileInput("drawingSaved.txt");
+            Scanner input = new Scanner(fileInputStream);
+
+            while(input.hasNext()){
+                Log.v("ReadingFIle", input.next());
+            }
+
+            fileInputStream.close();
+        }
+        catch (IOException e){
+            Log.e("IoError", "ProblemSaving", e);
+        }
+    }
+
 }

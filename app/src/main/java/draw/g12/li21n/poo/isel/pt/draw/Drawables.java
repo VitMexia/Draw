@@ -25,7 +25,6 @@ public abstract class Drawables {
     }
 
 
-
     public void setListener(DrawableListener drawableListener) {
         this.dListener = drawableListener ;
         dListener.PointCreated(startPosition);

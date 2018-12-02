@@ -25,4 +25,10 @@ public class Position {
     public void setLine(float line) {
         this.line = line;
     }
+
+
+    @Override
+    public String toString() {
+        return "("+ Float.toString(getLine()) + ", " + Float.toString(getCol()) + ")";
+    }
 }
