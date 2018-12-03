@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveDrawing(){
 
         try{
-        FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_APPEND);
+        FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_PRIVATE);
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
 
         if(draw.ldrawables != null && draw.ldrawables.size()>0 ){
@@ -225,9 +225,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("BuildingFile", temp);
                 bufferedWriter.newLine();
             }
-
+            bufferedWriter.close();
             outputStream.close();
-
+            Log.v("BuildingFiledir", this.getFilesDir().getAbsolutePath());
         }
         }
         catch (IOException e){
