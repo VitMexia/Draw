@@ -6,11 +6,6 @@ public class Pixel extends Drawables {
 
     }
 
-    @Override
-    public void setEndPosition(Position pos){
-        this.endPosition = pos;
-        dListener.EndPositionChanged(pos);
-    };
 
     @Override
     public String toString() {
