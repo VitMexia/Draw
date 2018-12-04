@@ -37,14 +37,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         draw = new Draw(this);
         //drawablesList = new LinkedList<>();
         buildView();
-
-
-
     }
+
     boolean pushed = false;
     int countMoves = 0;
 
@@ -85,11 +82,7 @@ public class MainActivity extends AppCompatActivity {
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    try{
-                        saveDrawing();
-//                }
-//                    catch (IOException e){
-//                    }
+                    saveDrawing();
                 }
             });
 
@@ -159,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
                     final int action = event.getAction();
 
-
                     if(action == MotionEvent.ACTION_DOWN){
                         Log.v("ScreenPressed", "Down");
                         pushed  = true;
@@ -188,8 +180,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void init(final Drawables drawable){
         Drawables.DrawableListener listener = new Drawables.DrawableListener() {
             @Override
@@ -207,45 +197,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveDrawing(){
+        // TODO: colocar o filepath numa constante ?
 
-        try{
-        FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_PRIVATE);
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-
-        if(draw.ldrawables != null && draw.ldrawables.size()>0 ){
-            bufferedWriter.write(draw.ldrawables.size());
-            bufferedWriter.newLine();
-            Log.v("BuildingFile", Integer.toString(draw.ldrawables.size()));
-            Iterator<Drawables> itr = draw.ldrawables.iterator();
-
-            while(itr.hasNext()){
-
-                String temp  =itr.next().toString() ;
-                bufferedWriter.write(temp);
-                Log.v("BuildingFile", temp);
+        try (FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_PRIVATE);
+             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream))
+        ){
+            if(draw.ldrawables != null && draw.ldrawables.size()>0 ){
+                bufferedWriter.write(draw.ldrawables.size());
                 bufferedWriter.newLine();
+                Log.v("BuildingFile", Integer.toString(draw.ldrawables.size()));
+                Iterator<Drawables> itr = draw.ldrawables.iterator();
+
+                while(itr.hasNext()){
+                    String temp  =itr.next().toString() ;
+                    bufferedWriter.write(temp);
+                    Log.v("BuildingFile", temp);
+                    bufferedWriter.newLine();
+                }
+                Log.v("BuildingFiledir", this.getFilesDir().getAbsolutePath());
             }
-            bufferedWriter.close();
-            outputStream.close();
-            Log.v("BuildingFiledir", this.getFilesDir().getAbsolutePath());
-        }
-        }
-        catch (IOException e){
+        } catch (IOException e){
             Log.e("IoError", "ProblemSaving", e);
         }
     }
 
     private void loadDrawing() {
-        try{
-
-            FileInputStream fileInputStream = openFileInput("drawingSaved.txt");
-            Scanner input = new Scanner(fileInputStream);
-
+        try(FileInputStream fileInputStream = openFileInput("drawingSaved.txt");
+            Scanner input = new Scanner(fileInputStream)
+        ){
             while(input.hasNext()){
-                Log.v("ReadingFIle", input.next());
+                Log.v("ReadingFile", input.next());
             }
-
-            fileInputStream.close();
         }
         catch (IOException e){
             Log.e("IoError", "ProblemSaving", e);

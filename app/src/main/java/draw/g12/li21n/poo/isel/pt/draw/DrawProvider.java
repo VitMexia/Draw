@@ -1,21 +1,28 @@
 package draw.g12.li21n.poo.isel.pt.draw;
 
+import android.util.Log;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class DrawProvider implements DrawType{
 
     @Override
     public Drawables getDrawable(String type, Position position) {
-        if(type== "Line"){
-            return new Line(position);
+        type = this.getClass().getPackage().getName() + "." + type; // convert to canonical name
+
+        Constructor<?> constructor = null;
+        try {
+            constructor = Class.forName(type).getConstructor(position.getClass());
+        } catch (NoSuchMethodException | ClassNotFoundException e) {
+            Log.e("Draw", "Error loading constructor for class " + type, e);
         }
-        else if (type== "Circle"){
-            return new Circle(position);
+        Object obj = null;
+        try {
+            obj = constructor.newInstance(position);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            Log.e("Draw", "Error instantiating " + type, e);
         }
-        else if (type== "Pixel"){
-            return new Pixel(position);
-        }
-        else if (type== "Rect"){
-            return new Rectangular(position);
-        }
-        return null;
+        return (Drawables) obj;
     }
 }

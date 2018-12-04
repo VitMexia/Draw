@@ -53,7 +53,7 @@ public class Draw extends View {
         else if(toDraw instanceof Circle){
             canvas.drawCircle(toDraw.getStartPosition().getLine(),toDraw.getStartPosition().getCol(),toDraw.getRadius(), brush );
         }
-        else if(toDraw instanceof Rectangular){
+        else if(toDraw instanceof Rect){
             canvas.drawRect(toDraw.getStartPosition().getLine(), toDraw.getStartPosition().getCol(), toDraw.getEndPosition().getLine(), toDraw.getEndPosition().getCol(), brush);
         }
         else if(toDraw instanceof Pixel){

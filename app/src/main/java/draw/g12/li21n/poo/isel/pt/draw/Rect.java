@@ -1,8 +1,8 @@
 package draw.g12.li21n.poo.isel.pt.draw;
 
-public class Rectangular extends Drawables {
+public class Rect extends Drawables {
 
-    public Rectangular(Position position) {
+    public Rect(Position position) {
         super(position);
     }
 
