@@ -4,5 +4,5 @@ public interface DrawType {
 
 
 
-    Drawables getDrawable(String type, Position position);
+    Figure getDrawable(String type, Point point);
 }

@@ -8,21 +8,21 @@ import java.lang.reflect.InvocationTargetException;
 public class DrawProvider implements DrawType {
 
     @Override
-    public Drawables getDrawable(String type, Position position) {
+    public Figure getDrawable(String type, Point point) {
         type = this.getClass().getPackage().getName() + "." + type; // convert to canonical name
 
         Constructor<?> constructor = null;
         try {
-            constructor = Class.forName(type).getConstructor(position.getClass());
+            constructor = Class.forName(type).getConstructor(point.getClass());
         } catch (NoSuchMethodException | ClassNotFoundException e) {
             Log.e("Draw", "Error loading constructor for class " + type, e);
         }
         Object obj = null;
         try {
-            obj = constructor.newInstance(position);
+            obj = constructor.newInstance(point);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
             Log.e("Draw", "Error instantiating " + type, e);
         }
-        return (Drawables) obj;
+        return (Figure) obj;
     }
 }

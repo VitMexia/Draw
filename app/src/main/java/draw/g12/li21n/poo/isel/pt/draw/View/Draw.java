@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw;
+package draw.g12.li21n.poo.isel.pt.draw.View;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import draw.g12.li21n.poo.isel.pt.draw.Model.Circle;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Drawables;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Pixel;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Rect;
@@ -19,9 +19,9 @@ import draw.g12.li21n.poo.isel.pt.draw.Model.Rect;
 
 public class Draw extends View {
 
-    private Drawables toDraw;
+    private Figure toDraw;
     private Paint brush;
-    public LinkedList<Drawables> ldrawables;
+    public LinkedList<Figure> ldrawables;
 
     public Draw(Context context){
         super(context);
@@ -41,7 +41,7 @@ public class Draw extends View {
         super.onDraw(canvas);
 //        canvas.save();
 //
-        Iterator<Drawables> itr = ldrawables.iterator();
+        Iterator<Figure> itr = ldrawables.iterator();
 
         while(itr.hasNext()) {
             drawableToDraw(canvas, itr.next());
@@ -52,24 +52,24 @@ public class Draw extends View {
         Log.v("ScreenPressed",  " Drawing2?!");
     }
 
-    private void drawableToDraw(Canvas canvas, Drawables toDraw){
+    private void drawableToDraw(Canvas canvas, Figure toDraw){
         if(toDraw instanceof Line) {
-            canvas.drawLine(toDraw.getStartPosition().getLine(), toDraw.getStartPosition().getCol(), toDraw.getEndPosition().getLine(), toDraw.getEndPosition().getCol(), brush);
+            canvas.drawLine(toDraw.getStartPoint().getLine(), toDraw.getStartPoint().getCol(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
         }
         else if(toDraw instanceof Circle){
-            canvas.drawCircle(toDraw.getStartPosition().getLine(),toDraw.getStartPosition().getCol(),toDraw.getRadius(), brush );
+            canvas.drawCircle(toDraw.getStartPoint().getLine(),toDraw.getStartPoint().getCol(),toDraw.getRadius(), brush );
         }
         else if(toDraw instanceof Rect){
-            canvas.drawRect(toDraw.getStartPosition().getLine(), toDraw.getStartPosition().getCol(), toDraw.getEndPosition().getLine(), toDraw.getEndPosition().getCol(), brush);
+            canvas.drawRect(toDraw.getStartPoint().getLine(), toDraw.getStartPoint().getCol(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
         }
         else if(toDraw instanceof Pixel){
             brush.setStrokeWidth(9);
-            canvas.drawPoint(toDraw.endPosition.getLine(), toDraw.endPosition.getCol(), brush);
+            canvas.drawPoint(toDraw.endPoint.getLine(), toDraw.endPoint.getCol(), brush);
             brush.setStrokeWidth(3);
         }
     }
 
-    public void repaint(Drawables drawable){
+    public void repaint(Figure drawable){
         this.toDraw = drawable;
 
         this.invalidate();

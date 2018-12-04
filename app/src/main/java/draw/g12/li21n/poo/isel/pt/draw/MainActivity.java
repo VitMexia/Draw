@@ -23,16 +23,18 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import draw.g12.li21n.poo.isel.pt.draw.Model.DrawProvider;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Drawables;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Position;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Point;
+import draw.g12.li21n.poo.isel.pt.draw.View.Draw;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final float BUTTON_TEXT_SIZE = 30;
 
     private Draw draw;
-    private Drawables toDraw;
-//    private LinkedList<Drawables> drawablesList;
+    private Figure toDraw;
+//    private LinkedList<Figure> drawablesList;
     RadioButton radioButtonChecked;
 
     @Override
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
             final RadioButton lineRadio = new RadioButton(this);
             lineRadio.setText("Line");
+            lineRadio.setTag(Line.class.getCanonicalName());
+
 
 
             final RadioButton rectRadio = new RadioButton(this);
@@ -156,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     if(action == MotionEvent.ACTION_DOWN){
                         Log.v("ScreenPressed", "Down");
                         pushed  = true;
-                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Position(event.getX(), event.getY()));
+                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Point(event.getX(), event.getY()));
                         init(toDraw);
 
                     }
@@ -167,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     else if(pushed && action == MotionEvent.ACTION_MOVE){
-                        toDraw.setEndPosition(new Position(event.getX(), event.getY()));
+                        toDraw.setEndPoint(new Point(event.getX(), event.getY()));
 
                     }
                     return true;
@@ -181,15 +185,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void init(final Drawables drawable){
-        Drawables.DrawableListener listener = new Drawables.DrawableListener() {
+    private void init(final Figure figure){
+        Figure.FigureListener listener = new Figure.FigureListener() {
             @Override
-            public void EndPositionChanged(Position endPos) {
+            public void EndPointChanged(Point endPos) {
                 draw.repaint(toDraw);
             }
 
             @Override
-            public void PointCreated(Position position) {
+            public void PointCreated(Point position) {
                 draw.repaint(toDraw);
             }
         };
@@ -207,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 bufferedWriter.write(draw.ldrawables.size());
                 bufferedWriter.newLine();
                 Log.v("BuildingFile", Integer.toString(draw.ldrawables.size()));
-                Iterator<Drawables> itr = draw.ldrawables.iterator();
+                Iterator<Figure> itr = draw.ldrawables.iterator();
 
                 while(itr.hasNext()){
                     String temp  =itr.next().toString() ;

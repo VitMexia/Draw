@@ -1,11 +1,11 @@
 package draw.g12.li21n.poo.isel.pt.draw.Model;
 
-public class Position {
+public class Point {
 
     private float col;
     private float line;
 
-    public Position(float line, float col){
+    public Point(float line, float col){
         this.col = col;
         this.line = line;
     }
