@@ -64,30 +64,26 @@ public abstract class Figure {
     }
 
      public static Figure newInstance(String type, int x, int y) {
-
          Point point = new Point(x, y);
-
          return Figure.newInstance(type, point);
      }
 
     private static Figure newInstance(String type, Point point) {
 
-             type = Figure.class.getPackage().getName() + "." + type; // convert to canonical name
+         type = Figure.class.getPackage().getName() + "." + type; // convert to canonical name
 
-             Constructor<?> constructor = null;
-             try {
-                 constructor = Class.forName(type).getConstructor(point.getClass());
-             } catch (NoSuchMethodException | ClassNotFoundException e) {
-                 Log.e("Draw", "Error loading constructor for class " + type, e);
-             }
-             Object obj = null;
-             try {
-                 obj = constructor.newInstance(point);
-             } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                 Log.e("Draw", "Error instantiating " + type, e);
-             }
-             return (Figure) obj;
+         Constructor<?> constructor = null;
+         try {
+             constructor = Class.forName(type).getConstructor(point.getClass());
+         } catch (NoSuchMethodException | ClassNotFoundException e) {
+             Log.e("Draw", "Error loading constructor for class " + type, e);
          }
-
-
+         Object obj = null;
+         try {
+             obj = constructor.newInstance(point);
+         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+             Log.e("Draw", "Error instantiating " + type, e);
+         }
+         return (Figure) obj;
+     }
 }
