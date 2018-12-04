@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw;
+package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 
 import static java.lang.Math.abs;
@@ -12,9 +12,9 @@ public abstract class Drawables {
     }
     protected DrawableListener dListener;
 
-    protected Position startPosition;
-    protected Position endPosition;
-    protected float radius;
+    public Position startPosition;
+    public Position endPosition;
+    public float radius;
 
 
     public Drawables(Position position){

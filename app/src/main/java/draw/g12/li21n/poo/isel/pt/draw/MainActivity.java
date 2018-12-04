@@ -3,7 +3,6 @@ package draw.g12.li21n.poo.isel.pt.draw;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,19 +16,21 @@ import android.widget.RadioGroup;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
+
+import draw.g12.li21n.poo.isel.pt.draw.Model.DrawProvider;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Drawables;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Position;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final float BUTTON_TEXT_SIZE = 30;
 
-    private  Draw draw;
+    private Draw draw;
     private Drawables toDraw;
 //    private LinkedList<Drawables> drawablesList;
     RadioButton radioButtonChecked;

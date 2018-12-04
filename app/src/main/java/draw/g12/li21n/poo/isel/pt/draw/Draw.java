@@ -10,6 +10,12 @@ import android.view.View;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import draw.g12.li21n.poo.isel.pt.draw.Model.Circle;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Drawables;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Pixel;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Rect;
+
 
 public class Draw extends View {
 

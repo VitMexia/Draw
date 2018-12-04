@@ -1,11 +1,11 @@
-package draw.g12.li21n.poo.isel.pt.draw;
+package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class DrawProvider implements DrawType{
+public class DrawProvider implements DrawType {
 
     @Override
     public Drawables getDrawable(String type, Position position) {
