@@ -88,6 +88,6 @@ public abstract class Figure {
              }
              return (Figure) obj;
          }
-         }
-    }
+
+
 }
