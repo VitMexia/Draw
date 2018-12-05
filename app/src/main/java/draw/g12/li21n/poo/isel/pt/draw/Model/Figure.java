@@ -1,76 +1,55 @@
 package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 
-import android.os.Bundle;
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public abstract class Figure {
+
+    private static final Map<Character, String> figureMap;
+
+    // TODO: Verificar alternativas a inicialização estática
+    static {
+        figureMap = new HashMap<>();
+        figureMap.put(Line.LETTER, Objects.requireNonNull(Line.class.getCanonicalName()));
+        figureMap.put(Rect.LETTER, Objects.requireNonNull(Rect.class.getCanonicalName()));
+        figureMap.put(Circle.LETTER, Objects.requireNonNull(Circle.class.getCanonicalName()));
+        figureMap.put(Pixel.LETTER, Objects.requireNonNull(Pixel.class.getCanonicalName()));
+    }
+
+    protected Point startPoint;
+    protected Point endPoint;
+    private FigureListener dListener;
+
+    // TODO: save
+    // TODO: load
 
     public interface FigureListener {
         void EndPointChanged(Point endPos);
         void PointCreated(Point point);
     }
-    protected FigureListener dListener;
-
-    public Point startPoint;
-    public Point endPoint;
-    public float radius;
 
     public Figure(){}
 
     public Figure(Point point){
-
         if (point == null)
             throw new IllegalArgumentException();
-        this.startPoint = point;
-        this.endPoint = point;
+        startPoint = point;
+        endPoint = point;
     }
-
 
     public void setListener(FigureListener figureListener) {
         this.dListener = figureListener;
         dListener.PointCreated(startPoint);
     }
 
-    public void setEndPoint(Point pos){
-        this.endPoint = pos;
-        dListener.EndPointChanged(pos);
-    };
-
-    public void setStartPoint(Point pos) {
-        this.startPoint = pos;
-    }
-
-    public Point getEndPoint() {
-        return endPoint;
-    }
-
-    public Point getStartPoint(){
-        return startPoint;
-    }
-
-    public float getRadius(){
-        float xlength = abs(startPoint.getLine() - endPoint.getLine());
-        float ylength = abs(startPoint.getCol() - endPoint.getCol());
-
-        this.radius = (float)sqrt(xlength*xlength + ylength*ylength);
-        return radius;
-    }
-
-     public static Figure newInstance(String type, int x, int y) {
-         Point point = new Point(x, y);
-         return Figure.newInstance(type, point);
-     }
-
-    private static Figure newInstance(String type, Point point) {
-
-         type = Figure.class.getPackage().getName() + "." + type; // convert to canonical name
+    public static Figure newInstance(String type, Point point) {
+        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
 
          Constructor<?> constructor = null;
          try {
@@ -80,10 +59,50 @@ public abstract class Figure {
          }
          Object obj = null;
          try {
+             assert constructor != null;
              obj = constructor.newInstance(point);
          } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
              Log.e("Draw", "Error instantiating " + type, e);
          }
          return (Figure) obj;
      }
+
+    public static Figure newInstance(String type) {
+        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
+
+        Class figure = null;
+        try {
+            figure = Class.forName(type);
+        } catch (ClassNotFoundException e) {
+            Log.e("Draw", "Error loading class " + type, e);
+        }
+
+        Figure obj = null;
+        try {
+            assert figure != null;
+            obj = (Figure) figure.newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            Log.e("Draw", "Error instantiating " + type, e);
+        }
+
+        return obj;
+    }
+
+    public static Figure newInstance(String type, int x, int y) {
+        Point point = new Point(x, y);
+        return Figure.newInstance(type, point);
+    }
+
+    public static Figure newInstance(char letter) {
+        return newInstance(figureMap.get(letter));
+    }
+
+    public void setEnd(int x, int y) {
+        endPoint = new Point(x, y);
+        dListener.EndPointChanged(endPoint);
+    }
+
+    public Point getStart() {
+        return startPoint;
+    }
 }

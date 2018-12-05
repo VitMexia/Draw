@@ -2,33 +2,31 @@ package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 public class Point {
 
-    private float col;
-    private float line;
+    private int x, y;
 
-    public Point(float line, float col){
-        this.col = col;
-        this.line = line;
+    public Point(int x, int col) {
+        this.x = x;
+        this.y = y;
     }
 
-    public float getCol() {
-        return col;
+    public int getY() {
+        return y;
     }
 
-    public float getLine() {
-        return line;
+    public int getX() {
+        return x;
     }
 
-    public void setCol(float col) {
-        this.col = col;
+    void set(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
-
-    public void setLine(float line) {
-        this.line = line;
-    }
-
 
     @Override
     public String toString() {
-        return "("+ Float.toString(getLine()) + ", " + Float.toString(getCol()) + ")";
+        return "(" + Float.toString(getX()) + ", " + Float.toString(getY()) + ")";
     }
+
+    // TODO: save
+    // TODO: load
 }

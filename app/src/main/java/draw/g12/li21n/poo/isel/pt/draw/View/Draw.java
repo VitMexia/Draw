@@ -54,17 +54,17 @@ public class Draw extends View {
 
     private void drawableToDraw(Canvas canvas, Figure toDraw){
         if(toDraw instanceof Line) {
-            canvas.drawLine(toDraw.getStartPoint().getLine(), toDraw.getStartPoint().getCol(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
+            canvas.drawLine(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
         }
         else if(toDraw instanceof Circle){
-            canvas.drawCircle(toDraw.getStartPoint().getLine(),toDraw.getStartPoint().getCol(),toDraw.getRadius(), brush );
+            canvas.drawCircle(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getRadius(), brush);
         }
         else if(toDraw instanceof Rect){
-            canvas.drawRect(toDraw.getStartPoint().getLine(), toDraw.getStartPoint().getCol(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
+            canvas.drawRect(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
         }
         else if(toDraw instanceof Pixel){
             brush.setStrokeWidth(9);
-            canvas.drawPoint(toDraw.endPoint.getLine(), toDraw.endPoint.getCol(), brush);
+            canvas.drawPoint(toDraw.endPoint.getX(), toDraw.endPoint.getY(), brush);
             brush.setStrokeWidth(3);
         }
     }

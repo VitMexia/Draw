@@ -3,8 +3,8 @@ package draw.g12.li21n.poo.isel.pt.draw;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +22,6 @@ import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import draw.g12.li21n.poo.isel.pt.draw.Model.DrawProvider;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
 import draw.g12.li21n.poo.isel.pt.draw.Model.Point;
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     else if(pushed && action == MotionEvent.ACTION_MOVE){
-                        toDraw.setEndPoint(new Point(event.getX(), event.getY()));
+                        toDraw.setEnd(new Point(event.getX(), event.getY()));
 
                     }
                     return true;
