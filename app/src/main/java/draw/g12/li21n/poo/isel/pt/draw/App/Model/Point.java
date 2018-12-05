@@ -1,10 +1,13 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Point {
 
     private int x, y;
 
-    public Point(int x, int col) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -27,6 +30,11 @@ public class Point {
         return "(" + Float.toString(getX()) + ", " + Float.toString(getY()) + ")";
     }
 
-    // TODO: save
-    // TODO: load
+    public void save(PrintWriter out){
+        //TODO:save
+    }
+    public void load(Scanner in) {
+        // TODO: load
+    }
+
 }

@@ -183,22 +183,23 @@ public class MainActivity extends AppCompatActivity {
             Log.e("buildingerrors", "Error building Layout", e);
         }
     }
+//******************** Moved to DrawView?! *******************************//
 
-    private void init(final Figure figure){
-        Figure.FigureListener listener = new Figure.FigureListener() {
-            @Override
-            public void EndPointChanged(Point endPos) {
-                draw.repaint(toDraw);
-            }
-
-            @Override
-            public void PointCreated(Point position) {
-                draw.repaint(toDraw);
-            }
-        };
-        toDraw.setListener(listener);
-
-    }
+//    private void init(final Figure figure){
+//        Figure.FigureListener listener = new Figure.FigureListener() {
+//            @Override
+//            public void EndPointChanged(Point endPos) {
+//                draw.repaint(toDraw);
+//            }
+//
+//            @Override
+//            public void PointCreated(Point position) {
+//                draw.repaint(toDraw);
+//            }
+//        };
+//        toDraw.setListener(listener);
+//
+//    }
 
     private void saveDrawing(){
         // TODO: colocar o filepath numa constante ?

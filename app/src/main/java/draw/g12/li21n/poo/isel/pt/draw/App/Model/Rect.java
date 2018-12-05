@@ -5,12 +5,12 @@ public class Rect extends Line {
 
     public static char LETTER = 'R';
 
-    public Rect(Point point) {
-        super(point);
+    public Rect(int x, int y) {
+        super(x,y);
     }
 
-    @Override
-    public String toString() {
-        return "R " + startPoint.toString() + " " + endPoint.toString();
+    protected char getLetter(){
+        return LETTER;
     }
+
 }

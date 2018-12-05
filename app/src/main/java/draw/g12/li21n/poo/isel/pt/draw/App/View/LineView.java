@@ -12,7 +12,9 @@ public class LineView extends FigureView {
 
     @Override
     void draw(Canvas canvas) {
-        canvas.drawLine(figure.getStart().getX(), figure.getStart().getY(),
-                    figure.getEnd().getX(), figure.getEnd().getY(), paint());
+//        canvas.drawLine(figure.getStart().getX(), figure.getStart().getY(),
+//                    figure.getEnd().getX(), figure.getEnd().getY(), paint());
+
+        //TODO:GetEnd?!?
     }
 }

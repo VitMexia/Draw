@@ -3,15 +3,18 @@ package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
 import android.util.Log;
 
+import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
 public abstract class Figure {
 
     private static final Map<Character, String> figureMap;
+    protected Point startPoint;
 
     // TODO: Verificar alternativas a inicialização estática
     static {
@@ -22,26 +25,32 @@ public abstract class Figure {
         figureMap.put(Pixel.LETTER, Objects.requireNonNull(Pixel.class.getCanonicalName()));
     }
 
-    protected Point startPoint;
-    protected Point endPoint;
-    private FigureListener dListener;
 
-    // TODO: save
-    // TODO: load
+    protected FigureListener dListener;
 
     public interface FigureListener {
         void EndPointChanged(int x, int y);
         void PointCreated(int x, int y);
     }
 
+
+    public abstract void save(PrintWriter out) ; //TODO:save - abstract?
+    public abstract void load(Scanner in); // TODO: load - abstract?
+    public abstract void setEnd(int x, int y);
+
+
     public Figure(){}
 
-    public Figure(Point point){
-        if (point == null)
-            throw new IllegalArgumentException();
-        startPoint = point;
-        endPoint = point;
+    public Figure(int x, int y){
+        startPoint = new Point(x,y);
     }
+
+//    public Figure(Point point){
+//        if (point == null)
+//            throw new IllegalArgumentException();
+//        startPoint = point;
+//        //endPoint = point;
+//    }
 
     public void setListener(FigureListener figureListener) {
         this.dListener = figureListener;
@@ -97,10 +106,7 @@ public abstract class Figure {
         return newInstance(figureMap.get(letter));
     }
 
-    public void setEnd(int x, int y) {
-        //endPoint = new Point(x, y);
-        dListener.EndPointChanged(x, y);
-    }
+
 
     public Point getStart() {
         return startPoint;
