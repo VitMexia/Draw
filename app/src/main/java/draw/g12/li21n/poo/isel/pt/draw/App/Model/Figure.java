@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.Model;
+package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
 
 import android.util.Log;
@@ -30,8 +30,8 @@ public abstract class Figure {
     // TODO: load
 
     public interface FigureListener {
-        void EndPointChanged(Point endPos);
-        void PointCreated(Point point);
+        void EndPointChanged(int x, int y);
+        void PointCreated(int x, int y);
     }
 
     public Figure(){}
@@ -45,7 +45,7 @@ public abstract class Figure {
 
     public void setListener(FigureListener figureListener) {
         this.dListener = figureListener;
-        dListener.PointCreated(startPoint);
+        dListener.PointCreated(startPoint.getX(), startPoint.getY());
     }
 
     public static Figure newInstance(String type, Point point) {
@@ -98,8 +98,8 @@ public abstract class Figure {
     }
 
     public void setEnd(int x, int y) {
-        endPoint = new Point(x, y);
-        dListener.EndPointChanged(endPoint);
+        //endPoint = new Point(x, y);
+        dListener.EndPointChanged(x, y);
     }
 
     public Point getStart() {

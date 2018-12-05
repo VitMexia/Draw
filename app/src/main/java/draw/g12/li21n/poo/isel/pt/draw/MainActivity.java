@@ -22,10 +22,10 @@ import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Point;
-import draw.g12.li21n.poo.isel.pt.draw.View.Draw;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Point;
+import draw.g12.li21n.poo.isel.pt.draw.App.View.Draw;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
                     if(action == MotionEvent.ACTION_DOWN){
                         Log.v("ScreenPressed", "Down");
                         pushed  = true;
-                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Point(event.getX(), event.getY()));
-                        init(toDraw);
+//                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Point(event.getX(), event.getY()));
+//                        init(toDraw);
 
                     }
                     else if(action == MotionEvent.ACTION_UP){
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     else if(pushed && action == MotionEvent.ACTION_MOVE){
-                        toDraw.setEnd(new Point(event.getX(), event.getY()));
+//                        toDraw.setEnd(new Point(event.getX(), event.getY()));
 
                     }
                     return true;

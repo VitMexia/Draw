@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.View;
+package draw.g12.li21n.poo.isel.pt.draw.App.View;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,11 +10,11 @@ import android.view.View;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import draw.g12.li21n.poo.isel.pt.draw.Model.Circle;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Pixel;
-import draw.g12.li21n.poo.isel.pt.draw.Model.Rect;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Rect;
 
 
 public class Draw extends View {

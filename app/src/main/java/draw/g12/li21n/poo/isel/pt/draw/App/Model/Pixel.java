@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.Model;
+package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
 public class Pixel extends Figure {
     public static char LETTER = 'P';

@@ -1,11 +1,9 @@
-package draw.g12.li21n.poo.isel.pt.draw;
+package draw.g12.li21n.poo.isel.pt.draw.App;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.os.Bundle;
 
-import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
 public class DrawController extends Activity {
 

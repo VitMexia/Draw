@@ -1,10 +1,10 @@
-package draw.g12.li21n.poo.isel.pt.draw.View;
+package draw.g12.li21n.poo.isel.pt.draw.App.View;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
 
-import draw.g12.li21n.poo.isel.pt.draw.DrawController;
+import draw.g12.li21n.poo.isel.pt.draw.App.DrawController;
 
 public class DrawView extends View {
 
