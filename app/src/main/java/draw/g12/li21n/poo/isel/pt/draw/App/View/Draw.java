@@ -41,33 +41,33 @@ public class Draw extends View {
         super.onDraw(canvas);
 //        canvas.save();
 //
-        Iterator<Figure> itr = ldrawables.iterator();
-
-        while(itr.hasNext()) {
-            drawableToDraw(canvas, itr.next());
-        }
-
-        drawableToDraw(canvas, toDraw);
-
-        Log.v("ScreenPressed",  " Drawing2?!");
+//        Iterator<Figure> itr = ldrawables.iterator();
+//
+//        while(itr.hasNext()) {
+//            drawableToDraw(canvas, itr.next());
+//        }
+//
+//        drawableToDraw(canvas, toDraw);
+//
+//        Log.v("ScreenPressed",  " Drawing2?!");
     }
 
-    private void drawableToDraw(Canvas canvas, Figure toDraw){
-        if(toDraw instanceof Line) {
-            canvas.drawLine(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
-        }
-        else if(toDraw instanceof Circle){
-            canvas.drawCircle(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getRadius(), brush);
-        }
-        else if(toDraw instanceof Rect){
-            canvas.drawRect(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
-        }
-        else if(toDraw instanceof Pixel){
-            brush.setStrokeWidth(9);
-            canvas.drawPoint(toDraw.endPoint.getX(), toDraw.endPoint.getY(), brush);
-            brush.setStrokeWidth(3);
-        }
-    }
+//    private void drawableToDraw(Canvas canvas, Figure toDraw){
+//        if(toDraw instanceof Line) {
+//            canvas.drawLine(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
+//        }
+//        else if(toDraw instanceof Circle){
+//            canvas.drawCircle(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getRadius(), brush);
+//        }
+//        else if(toDraw instanceof Rect){
+//            canvas.drawRect(toDraw.getStart().getX(), toDraw.getStart().getY(), toDraw.getEndPoint().getLine(), toDraw.getEndPoint().getCol(), brush);
+//        }
+//        else if(toDraw instanceof Pixel){
+//            brush.setStrokeWidth(9);
+//            canvas.drawPoint(toDraw.endPoint.getX(), toDraw.endPoint.getY(), brush);
+//            brush.setStrokeWidth(3);
+//        }
+//    }
 
     public void repaint(Figure drawable){
         this.toDraw = drawable;
