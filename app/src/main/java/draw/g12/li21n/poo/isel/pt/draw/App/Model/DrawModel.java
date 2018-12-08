@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DrawModel {
-    private List<Figure> figures;
+    public List<Figure> figures;
 
     public DrawModel() {
         figures = new ArrayList<>();

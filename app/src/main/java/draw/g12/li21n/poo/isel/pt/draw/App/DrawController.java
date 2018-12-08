@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,12 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Scanner;
-
-
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
@@ -30,9 +25,7 @@ import draw.g12.li21n.poo.isel.pt.draw.App.View.DrawView;
 public class DrawController extends Activity {
     private static final float BUTTON_TEXT_SIZE = 30;
 
-//    private Draw draw;
-//    private Figure toDraw;
-//    private LinkedList<Figure> drawablesList;
+    DrawModel drawModel;
 
     private DrawView drawView;
 
@@ -43,6 +36,7 @@ public class DrawController extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         drawView = new DrawView(this);
+        drawModel = new DrawModel();
         buildView();
     }
 
@@ -145,15 +139,11 @@ public class DrawController extends Activity {
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                     radioButtonChecked =findViewById(checkedId);
-
                     Log.v("RadioChecked", radioButtonChecked.getText().toString());
-
                 }
             });
 
-//            lineRadio.setChecked(true);
 
             setContentView(rootPanel);
         }
@@ -164,9 +154,9 @@ public class DrawController extends Activity {
 
     private void onReset(){
 
-//            if(drawView.ldrawables != null)
-//                draw.ldrawables.clear();
-//            drawView.repaint(null);
+            while(drawModel.iterator().hasNext())
+                drawModel.iterator().remove();
+            drawView.reloadModel(drawModel);
     }
 
     private void onLoad(){
@@ -178,63 +168,11 @@ public class DrawController extends Activity {
     }
 
     public Figure createSelectedFigure(int x, int y){
-
-        return Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
-    }
-//******************** Moved to DrawView?! *******************************//
-
-//    private void init(final Figure figure){
-//        Figure.FigureListener listener = new Figure.FigureListener() {
-//            @Override
-//            public void EndPointChanged(Point endPos) {
-//                draw.repaint(toDraw);
-//            }
-//
-//            @Override
-//            public void PointCreated(Point position) {
-//                draw.repaint(toDraw);
-//            }
-//        };
-//        toDraw.setListener(listener);
-//
-//    }
-
-//    private void saveDrawing(){
-//        // TODO: colocar o filepath numa constante ?
-//
-//        try (FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_PRIVATE);
-//             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream))
-//        ){
-//            if(draw.ldrawables != null && draw.ldrawables.size()>0 ){
-//                bufferedWriter.write(draw.ldrawables.size());
-//                bufferedWriter.newLine();
-//                Log.v("BuildingFile", Integer.toString(draw.ldrawables.size()));
-//                Iterator<Figure> itr = draw.ldrawables.iterator();
-//
-//                while(itr.hasNext()){
-//                    String temp  =itr.next().toString() ;
-//                    bufferedWriter.write(temp);
-//                    Log.v("BuildingFile", temp);
-//                    bufferedWriter.newLine();
-//                }
-//                Log.v("BuildingFiledir", this.getFilesDir().getAbsolutePath());
-//            }
-//        } catch (IOException e){
-//            Log.e("IoError", "ProblemSaving", e);
-//        }
-//    }
-
-    private void loadDrawing() {
-        try(FileInputStream fileInputStream = openFileInput("drawingSaved.txt");
-            Scanner input = new Scanner(fileInputStream)
-        ){
-            while(input.hasNext()){
-                Log.v("ReadingFile", input.next());
-            }
-        }
-        catch (IOException e){
-            Log.e("IoError", "ProblemSaving", e);
-        }
+            Figure figure  = Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
+            drawModel.add(figure);
+            drawView.reloadModel(drawModel);
+//            drawView.reloadModel(drawModel);
+        return figure;
     }
 
 }

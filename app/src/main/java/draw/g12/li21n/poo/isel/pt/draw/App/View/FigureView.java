@@ -27,16 +27,10 @@ public abstract class FigureView {
         init(figure);
     }
 
-//    Paint paint(){
-//        //TODO:paint
-//        return null;
-//    }
-
     abstract void draw(Canvas canvas);
 
     static FigureView newInstance(Figure figure){
 
-        //TODO:FigureView
         String type = figure.getClass().getName() + "View";
         type = type.replace("Model", "View");
 
