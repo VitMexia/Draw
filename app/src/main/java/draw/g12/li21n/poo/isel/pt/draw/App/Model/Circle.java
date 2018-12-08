@@ -32,8 +32,10 @@ public class Circle extends Figure {
     }
     @Override
     public void load(Scanner in) {
+        super.load(in);
+        String[] splt = in.next().trim().split("\\|");
+        radius = Integer.parseInt(splt[1]);
 
-        // TODO: load
     }
 
     public int getRadius(){

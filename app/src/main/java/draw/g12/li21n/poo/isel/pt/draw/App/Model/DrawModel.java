@@ -24,8 +24,10 @@ public class DrawModel {
         }
     }
     public void load(Scanner in) {
-        for (Figure figure : figures) {
+        while (in.hasNextLine()) {
+            Figure figure = Figure.newInstance(in.next());
             figure.load(in);
+            figures.add(figure);
         }
     }
 
