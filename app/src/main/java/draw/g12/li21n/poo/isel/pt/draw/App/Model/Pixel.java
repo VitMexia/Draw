@@ -11,7 +11,7 @@ public class Pixel extends Figure {
 
     public Pixel(int x, int y) {
         super(x,y);
-        dListener.PointCreated(x,y);
+//        dListener.PointCreated(x,y);
     }
 
     protected char getLetter(){
@@ -20,7 +20,7 @@ public class Pixel extends Figure {
 
     @Override
     public void setEnd(int x, int y) {
-        dListener.EndPointChanged(x, y);
+//        dListener.EndPointChanged(x, y);
         startPoint = new Point(x,y);
     }
 

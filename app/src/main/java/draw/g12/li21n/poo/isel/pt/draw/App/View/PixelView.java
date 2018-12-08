@@ -13,6 +13,7 @@ public class PixelView extends FigureView {
 
     @Override
     void draw(Canvas canvas) {
+        paint.setStrokeWidth(9);
         canvas.drawPoint(figure.getStart().getX(), figure.getStart().getY(), paint);
     }
 

@@ -19,8 +19,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Rect;
 import draw.g12.li21n.poo.isel.pt.draw.App.View.DrawView;
 
 
@@ -93,16 +96,19 @@ public class DrawController extends Activity {
 
             final RadioButton lineRadio = new RadioButton(this);
             lineRadio.setText("Line");
-            lineRadio.setTag(Line.class.getCanonicalName());
+            lineRadio.setTag(Line.class.getName());
 
             final RadioButton rectRadio = new RadioButton(this);
             rectRadio.setText("Rect");
+            rectRadio.setTag(Rect.class.getCanonicalName());
 
             final RadioButton pixelRadio = new RadioButton(this);
             pixelRadio.setText("Pixel");
+            pixelRadio.setTag(Pixel.class.getCanonicalName());
 
             final RadioButton circleRadio = new RadioButton(this);
             circleRadio.setText("Circle");
+            circleRadio.setTag(Circle.class.getCanonicalName());
 
             radioGroup.addView(lineRadio);
             radioGroup.addView(rectRadio);
