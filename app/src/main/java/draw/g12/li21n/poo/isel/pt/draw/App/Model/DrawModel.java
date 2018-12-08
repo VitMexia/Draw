@@ -24,6 +24,7 @@ public class DrawModel {
         // TODO: load
     }
 
+
     public Iterator<Figure> iterator() {
         // TODO: iterator
         return null;

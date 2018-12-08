@@ -2,6 +2,7 @@ package draw.g12.li21n.poo.isel.pt.draw.App.View;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
@@ -25,7 +26,25 @@ public abstract class FigureView {
 
     static FigureView newInstance(Figure figure){
         //TODO:FigureView
-        return null;
+        String type = figure.getClass().getName() + "View";
+
+        Class figureView = null;
+
+        try {
+            figureView = Class.forName(type);
+        } catch (ClassNotFoundException e) {
+            Log.e("Draw", "Error loading class " + type, e);
+        }
+
+        FigureView obj = null;
+        try {
+            assert figureView != null;
+            obj = (FigureView) figureView.newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            Log.e("Draw", "Error instantiating " + type, e);
+        }
+
+        return obj;
     }
 
     private void init(final Figure figure){

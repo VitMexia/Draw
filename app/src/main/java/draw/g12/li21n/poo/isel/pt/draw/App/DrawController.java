@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +19,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.App.View.DrawView;
 
 
 public class DrawController extends Activity {
@@ -30,22 +31,16 @@ public class DrawController extends Activity {
 //    private Figure toDraw;
 //    private LinkedList<Figure> drawablesList;
 
-
+    private DrawView drawView;
 
     RadioButton radioButtonChecked;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        drawView = new DrawView(this);
         buildView();
-
-//        if(savedInstanceState != null){
-//            savedInstanceState.get("CheckedRadio");
-//
-//
-//
-//        }
     }
 
     @Override
@@ -53,11 +48,6 @@ public class DrawController extends Activity {
         super.onSaveInstanceState(outState);
          outState.putString("CheckedRadio", radioButtonChecked.getTag().toString());
     }
-
-
-
-    boolean pushed = false;
-    int countMoves = 0;
 
     @SuppressLint("ClickableViewAccessibility")
     private void buildView(){
@@ -73,10 +63,7 @@ public class DrawController extends Activity {
             resetButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if(draw.ldrawables != null)
-//                        draw.ldrawables.clear();
-//                    draw.repaint(null);
-
+                    onReset();
                 }
             });
 
@@ -86,7 +73,7 @@ public class DrawController extends Activity {
             loadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadDrawing();
+                    onLoad();
                 }
             });
 
@@ -94,12 +81,12 @@ public class DrawController extends Activity {
             saveButton.setText("SAVE");
             saveButton.setTextSize(BUTTON_TEXT_SIZE);
 
-//            saveButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    saveDrawing();
-//                }
-//            });
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSave();
+                }
+            });
 
             final RadioGroup radioGroup = new RadioGroup(this);
             radioGroup.setOrientation(LinearLayout.HORIZONTAL);
@@ -107,8 +94,6 @@ public class DrawController extends Activity {
             final RadioButton lineRadio = new RadioButton(this);
             lineRadio.setText("Line");
             lineRadio.setTag(Line.class.getCanonicalName());
-
-
 
             final RadioButton rectRadio = new RadioButton(this);
             rectRadio.setText("Rect");
@@ -125,9 +110,7 @@ public class DrawController extends Activity {
             radioGroup.addView(circleRadio);
 
 
-
-            lineRadio.setChecked(true);
-            radioButtonChecked = lineRadio;
+            //radioButtonChecked = lineRadio;
 
             buttonPanel.addView(resetButton);
             buttonPanel.addView(loadButton);
@@ -138,19 +121,20 @@ public class DrawController extends Activity {
 
             final LinearLayout drawPanel = new LinearLayout(this);
             drawPanel.setBackgroundColor(Color.parseColor("#D3F2EE"));
-            //drawPanel.addView(draw);
-
-
+            drawPanel.addView(drawView);
 
             rootPanel.addView(buttonPanel);
             rootPanel.addView(radioGroup);
             rootPanel.addView(drawPanel);
 
+            lineRadio.setChecked(true);
+            radioButtonChecked = lineRadio;
             ViewGroup.LayoutParams params = drawPanel.getLayoutParams();
             params.width = LinearLayout.LayoutParams.MATCH_PARENT;
             params.height = LinearLayout.LayoutParams.MATCH_PARENT;
 
             drawPanel.setLayoutParams(params);
+
 
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -163,38 +147,33 @@ public class DrawController extends Activity {
                 }
             });
 
-            drawPanel.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-
-                    final int action = event.getAction();
-
-                    if(action == MotionEvent.ACTION_DOWN){
-                        Log.v("ScreenPressed", "Down");
-                        pushed  = true;
-//                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Point(event.getX(), event.getY()));
-//                        init(toDraw);
-
-                    }
-                    else if(action == MotionEvent.ACTION_UP){
-                        Log.v("ScreenPressed", "Up");
-                        pushed  = false;
-                      //  draw.ldrawables.add(toDraw);
-
-                    }
-                    else if(pushed && action == MotionEvent.ACTION_MOVE){
-//                        toDraw.setEnd(new Point(event.getX(), event.getY()));
-
-                    }
-                    return true;
-                }
-            });
+//            lineRadio.setChecked(true);
 
             setContentView(rootPanel);
         }
         catch (Exception e){
             Log.e("buildingerrors", "Error building Layout", e);
         }
+    }
+
+    private void onReset(){
+
+//            if(drawView.ldrawables != null)
+//                draw.ldrawables.clear();
+//            drawView.repaint(null);
+    }
+
+    private void onLoad(){
+        //TODO: onLoad
+    }
+
+    private void onSave(){
+        //TODO: onSave
+    }
+
+    public Figure createSelectedFigure(int x, int y){
+
+        return Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
     }
 //******************** Moved to DrawView?! *******************************//
 

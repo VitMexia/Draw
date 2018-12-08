@@ -7,14 +7,9 @@ import android.graphics.Paint;
 import android.util.Log;
 import android.view.View;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Rect;
 
 
 public class Draw extends View {
