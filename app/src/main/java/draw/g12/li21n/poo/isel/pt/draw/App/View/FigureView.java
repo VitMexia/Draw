@@ -1,6 +1,7 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.View;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
@@ -9,18 +10,24 @@ import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 public abstract class FigureView {
 
     Figure figure;
+    Paint paint;
 
     FigureView(Figure figure){
         //TODO:FigureView
 
         this.figure =figure;
+        paint = new Paint();
+        paint.setStrokeWidth(3);
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);
+
         init(figure);
     }
 
-    protected Paint paint(){
-        //TODO:paint
-        return null;
-    }
+//    Paint paint(){
+//        //TODO:paint
+//        return null;
+//    }
 
     abstract void draw(Canvas canvas);
 
