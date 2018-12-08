@@ -13,7 +13,7 @@ public class PixelView extends FigureView {
 
     @Override
     void draw(Canvas canvas) {
-        canvas.drawPoint(figure.getStart().getX(), figure.getStart().getY(), paint());
+        canvas.drawPoint(figure.getStart().getX(), figure.getStart().getY(), paint);
     }
 
 }

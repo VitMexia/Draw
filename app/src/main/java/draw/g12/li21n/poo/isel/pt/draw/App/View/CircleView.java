@@ -12,7 +12,7 @@ public class CircleView extends FigureView {
 
     @Override
     void draw(Canvas canvas) {
-        //canvas.drawCircle(figure.getStart().getX(), figure.getStart().getY(), figure.getRadius(), paint());
+        //canvas.drawCircle(figure.getStart().getX(), figure.getStart().getY(), figure.getRadius(), paint);
         //TODO:HOw the hell do we getRadius() from the figure????
     }
 }

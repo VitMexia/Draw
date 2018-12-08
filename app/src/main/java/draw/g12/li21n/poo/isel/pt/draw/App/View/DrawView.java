@@ -8,12 +8,17 @@ import android.view.View;
 
 import draw.g12.li21n.poo.isel.pt.draw.App.DrawController;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
+import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
 public class DrawView extends View {
 
-    DrawView(DrawController drawController){
-        super(drawController);
+    DrawController drawController;
+    FigureView figureView;
+    Figure figure;
 
+    public DrawView(DrawController drawController){
+        super(drawController);
+        this.drawController = drawController;
     }
     boolean pushed = false;
 
@@ -21,9 +26,9 @@ public class DrawView extends View {
 
 
     }
-    public DrawView(Context context) {
-        super(context);
-    }
+//    public DrawView(Context context) {
+//        super(context);
+//    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -39,6 +44,12 @@ public class DrawView extends View {
         if(action == MotionEvent.ACTION_DOWN){
             Log.v("ScreenPressed", "Down");
             pushed  = true;
+            figure = drawController.createSelectedFigure((int)event.getX(), (int) event.getY());
+            figureView = FigureView.newInstance(figure);
+
+
+
+
 //                        toDraw = new DrawProvider().getDrawable(radioButtonChecked.getText().toString() ,new Point(event.getX(), event.getY()));
 //                        init(toDraw);
 
@@ -52,6 +63,10 @@ public class DrawView extends View {
         }
         else if(pushed && action == MotionEvent.ACTION_MOVE){
 //                        toDraw.setEnd(new Point(event.getX(), event.getY()));
+
+            figure.setEnd((int)event.getX(), (int) event.getY());
+            figureView.draw(new Canvas());
+
             Log.v("ScreenPressed", "Moving");
 
         }
