@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
 public abstract class FigureView {
@@ -32,26 +35,30 @@ public abstract class FigureView {
     abstract void draw(Canvas canvas);
 
     static FigureView newInstance(Figure figure){
+
         //TODO:FigureView
         String type = figure.getClass().getName() + "View";
+        type = type.replace("Model", "View");
 
-        Class figureView = null;
+        Constructor<?> constructor = null;
+        try {
+            constructor = Class.forName(type).getConstructor(Figure.class);
+        }
+        catch (NoSuchMethodException | ClassNotFoundException e)
+        {
+            Log.e("DrawDebug", "Error loading constructor for class " + type, e);
+        }
+        FigureView figureView = null;
 
         try {
-            figureView = Class.forName(type);
-        } catch (ClassNotFoundException e) {
-            Log.e("Draw", "Error loading class " + type, e);
+            figureView = (FigureView)constructor.newInstance(figure);
+        }
+        catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            Log.e("DrawDebug", "Error loading class " + type, e);
         }
 
-        FigureView obj = null;
-        try {
-            assert figureView != null;
-            obj = (FigureView) figureView.newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
-            Log.e("Draw", "Error instantiating " + type, e);
-        }
 
-        return obj;
+       return figureView;
     }
 
     private void init(final Figure figure){
