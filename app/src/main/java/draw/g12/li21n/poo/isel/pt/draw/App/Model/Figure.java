@@ -58,9 +58,6 @@ public abstract class Figure {
     }
 
     public static Figure newInstance(String type, Point point) {
-
-        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
-
          Constructor<?> constructor = null;
          try {
              constructor = Class.forName(type).getConstructor(point.getClass());
@@ -82,9 +79,6 @@ public abstract class Figure {
      }
 
     public static Figure newInstance(String type) {
-
-        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
-
         Class figure = null;
         try {
             figure = Class.forName(type);
