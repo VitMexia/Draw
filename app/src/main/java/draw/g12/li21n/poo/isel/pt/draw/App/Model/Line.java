@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Line extends Figure {
 
-    public static char LETTER = 'L';
+    public static final char LETTER = 'L';
     protected Point endPoint;
 
     public Line(int x, int y){
@@ -33,9 +33,8 @@ public class Line extends Figure {
 
     @Override
     public void save(PrintWriter out){
-        out.append(LETTER);
-        startPoint.save(out);
-        out.close();
+        super.save(out);
+        endPoint.save(out);
     }
     @Override
     public void load(Scanner in) {

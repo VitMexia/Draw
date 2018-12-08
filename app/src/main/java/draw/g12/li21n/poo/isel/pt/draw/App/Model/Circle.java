@@ -27,8 +27,8 @@ public class Circle extends Figure {
 
     @Override
     public void save(PrintWriter out){
-        out.append(this.LETTER + " " + startPoint.toString() + " |" + radius + "|");
-        out.close();
+        super.save(out);
+        out.append(" |" + radius + "|");
     }
     @Override
     public void load(Scanner in) {

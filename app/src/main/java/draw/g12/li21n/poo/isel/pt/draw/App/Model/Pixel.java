@@ -1,6 +1,5 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Pixel extends Figure {
@@ -24,11 +23,6 @@ public class Pixel extends Figure {
         startPoint = new Point(x,y);
     }
 
-    @Override
-    public void save(PrintWriter out){
-        out.append(this.LETTER + " " + startPoint.toString());
-        out.close();
-    }
     @Override
     public void load(Scanner in) {
 

@@ -31,7 +31,7 @@ public class Point {
     }
 
     public void save(PrintWriter out){
-        //TODO:save
+        out.append(" (" + getX() + "," + getY() + ")");
     }
     public void load(Scanner in) {
         // TODO: load

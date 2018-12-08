@@ -15,6 +15,7 @@ public abstract class Figure {
 
     private static final Map<Character, String> figureMap;
     protected Point startPoint;
+    public static char LETTER;
 
     // TODO: Verificar alternativas a inicialização estática
     static {
@@ -34,7 +35,10 @@ public abstract class Figure {
     }
 
 
-    public abstract void save(PrintWriter out) ; //TODO:save - abstract?
+    public void save(PrintWriter out) {
+        out.append(LETTER);
+        startPoint.save(out);
+    }
     public abstract void load(Scanner in); // TODO: load - abstract?
     public abstract void setEnd(int x, int y);
 

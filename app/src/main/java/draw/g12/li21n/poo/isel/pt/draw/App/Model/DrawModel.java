@@ -18,15 +18,18 @@ public class DrawModel {
     }
 
     public void save(PrintWriter out){
-        //TODO:save
+        for (Figure figure : figures) {
+            figure.save(out);
+            out.println();
+        }
     }
     public void load(Scanner in) {
-        // TODO: load
+        for (Figure figure : figures) {
+            figure.load(in);
+        }
     }
 
-
     public Iterator<Figure> iterator() {
-        // TODO: iterator
-        return null;
+        return figures.iterator();
     }
 }
