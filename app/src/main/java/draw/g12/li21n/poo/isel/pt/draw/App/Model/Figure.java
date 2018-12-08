@@ -58,24 +58,8 @@ public abstract class Figure {
     }
 
     public static Figure newInstance(String type, Point point) {
-         Constructor<?> constructor = null;
-         try {
-             constructor = Class.forName(type).getConstructor(point.getClass());
-         }
-         catch (NoSuchMethodException | ClassNotFoundException e)
-         {
-             Log.e("DrawDebug", "Error loading constructor for class " + type, e);
-         }
-         Object obj = null;
-         try {
-             assert constructor != null;
-             obj = constructor.newInstance(point);
-         }
-         catch (IllegalAccessException | InstantiationException | InvocationTargetException e)
-         {
-             Log.e("DrawDebug", "Error instantiating " + type, e);
-         }
-         return (Figure) obj;
+        return Figure.newInstance(type, point.getX(), point.getY());
+
      }
 
     public static Figure newInstance(String type) {
@@ -102,8 +86,20 @@ public abstract class Figure {
     }
 
     public static Figure newInstance(String type, int x, int y) {
-        Point point = new Point(x, y);
-        return Figure.newInstance(type, point);
+        Constructor<?> constructor = null;
+        try {
+            constructor = Class.forName(type).getConstructor(int.class, int.class);
+        } catch (NoSuchMethodException | ClassNotFoundException e) {
+            Log.e("DrawDebug", "Error loading constructor for class " + type, e);
+        }
+        Object obj = null;
+        try {
+            assert constructor != null;
+            obj = constructor.newInstance(x, y);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            Log.e("DrawDebug", "Error instantiating " + type, e);
+        }
+        return (Figure) obj;
     }
 
     public static Figure newInstance(char letter) {

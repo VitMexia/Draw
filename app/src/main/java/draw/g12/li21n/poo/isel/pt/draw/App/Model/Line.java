@@ -33,7 +33,8 @@ public class Line extends Figure {
 
     @Override
     public void save(PrintWriter out){
-        out.append(this.LETTER + " " + startPoint.toString() + " " + endPoint.toString());
+        out.append(LETTER);
+        startPoint.save(out);
         out.close();
     }
     @Override
