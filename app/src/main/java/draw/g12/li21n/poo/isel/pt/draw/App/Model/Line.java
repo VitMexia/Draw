@@ -38,7 +38,9 @@ public class Line extends Figure {
     }
     @Override
     public void load(Scanner in) {
-
-        // TODO: load
+        super.load(in);
+        String[] args = in.next().trim().split("[,()]");
+        // Args[0] empty due to splitting on "("
+        setEnd(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
     }
 }

@@ -39,7 +39,12 @@ public abstract class Figure {
         out.append(LETTER);
         startPoint.save(out);
     }
-    public abstract void load(Scanner in); // TODO: load - abstract?
+
+    public void load(Scanner in) {
+        String[] args = in.next().trim().split("[,()]");
+        // Args[0] empty due to splitting on "("
+        setStart(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+    }
     public abstract void setEnd(int x, int y);
 
 
@@ -110,7 +115,9 @@ public abstract class Figure {
         return newInstance(figureMap.get(letter));
     }
 
-
+    protected void setStart(int x, int y) {
+        this.startPoint = new Point(x, y);
+    }
 
     public Point getStart() {
         return startPoint;
