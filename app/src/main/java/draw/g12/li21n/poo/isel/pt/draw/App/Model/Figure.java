@@ -58,40 +58,44 @@ public abstract class Figure {
     }
 
     public static Figure newInstance(String type, Point point) {
-        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
-
          Constructor<?> constructor = null;
          try {
              constructor = Class.forName(type).getConstructor(point.getClass());
-         } catch (NoSuchMethodException | ClassNotFoundException e) {
-             Log.e("Draw", "Error loading constructor for class " + type, e);
+         }
+         catch (NoSuchMethodException | ClassNotFoundException e)
+         {
+             Log.e("DrawDebug", "Error loading constructor for class " + type, e);
          }
          Object obj = null;
          try {
              assert constructor != null;
              obj = constructor.newInstance(point);
-         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
-             Log.e("Draw", "Error instantiating " + type, e);
+         }
+         catch (IllegalAccessException | InstantiationException | InvocationTargetException e)
+         {
+             Log.e("DrawDebug", "Error instantiating " + type, e);
          }
          return (Figure) obj;
      }
 
     public static Figure newInstance(String type) {
-        type = Objects.requireNonNull(Figure.class.getPackage()).getName() + "." + type; // convert to canonical name
-
         Class figure = null;
         try {
             figure = Class.forName(type);
-        } catch (ClassNotFoundException e) {
-            Log.e("Draw", "Error loading class " + type, e);
+        }
+        catch (ClassNotFoundException e)
+        {
+            Log.e("DrawDebug", "Error loading class " + type, e);
         }
 
         Figure obj = null;
         try {
             assert figure != null;
             obj = (Figure) figure.newInstance();
-        } catch (IllegalAccessException | InstantiationException e) {
-            Log.e("Draw", "Error instantiating " + type, e);
+        }
+        catch (IllegalAccessException | InstantiationException e)
+        {
+            Log.e("DrawDebug", "Error instantiating " + type, e);
         }
 
         return obj;
