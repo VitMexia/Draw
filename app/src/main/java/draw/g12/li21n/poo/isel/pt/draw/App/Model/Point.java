@@ -1,9 +1,10 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Point {
+public class Point implements Serializable {
 
     private int x, y;
 

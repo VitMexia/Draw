@@ -4,6 +4,7 @@ package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 import android.util.Log;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public abstract class Figure {
+public abstract class Figure implements Serializable {
 
     private static final Map<Character, String> figureMap;
     protected Point startPoint, endPoint;
