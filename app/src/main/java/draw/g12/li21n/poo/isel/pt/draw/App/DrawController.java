@@ -44,14 +44,23 @@ public class DrawController extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         drawView = new DrawView(this);
-        drawModel = new DrawModel();
+
+        if (savedInstanceState != null) {
+            drawModel = (DrawModel) savedInstanceState.getSerializable("teste");
+            drawView.reloadModel(drawModel);
+            drawView.invalidate();
+        } else
+            drawModel = new DrawModel();
+
         buildView();
+
+
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("CheckedRadio", radioButtonChecked.getTag().toString());
+        outState.putSerializable("teste", drawModel);
     }
 
     @SuppressLint("ClickableViewAccessibility")

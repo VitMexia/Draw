@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -12,12 +13,12 @@ import draw.g12.li21n.poo.isel.pt.draw.App.DrawController;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
-public class DrawView extends View {
+public class DrawView extends View implements Serializable {
 
     DrawController drawController;
     FigureView figureView;
     Figure figure;
-    private LinkedList<FigureView> reloadFigure;
+    transient private LinkedList<FigureView> reloadFigure;
     DrawModel drawModel;
 
     public DrawView(DrawController drawController) {

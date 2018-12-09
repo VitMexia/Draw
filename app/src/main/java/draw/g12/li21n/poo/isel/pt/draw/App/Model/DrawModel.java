@@ -1,12 +1,13 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class DrawModel {
+public class DrawModel implements Serializable {
     private List<Figure> figures;
 
     public DrawModel() {
