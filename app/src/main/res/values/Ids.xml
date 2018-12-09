@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="lineRadio" />
+    <item type="id" name="rectRadio" />
+    <item type="id" name="pixelRadio" />
+    <item type="id" name="circleRadio" />
+</resources>

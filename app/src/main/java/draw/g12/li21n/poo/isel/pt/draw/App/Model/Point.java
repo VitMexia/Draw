@@ -34,6 +34,7 @@ public class Point implements Serializable {
     public void save(PrintWriter out){
         out.append(" (" + getX() + "," + getY() + ")");
     }
+
     public void load(Scanner in) {
         // TODO: load
     }

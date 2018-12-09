@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toolbar;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +29,7 @@ import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Rect;
 import draw.g12.li21n.poo.isel.pt.draw.App.View.DrawView;
+import draw.g12.li21n.poo.isel.pt.draw.R;
 
 
 public class DrawController extends Activity {
@@ -44,28 +46,43 @@ public class DrawController extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         drawView = new DrawView(this);
-
-        if (savedInstanceState != null) {
-            drawModel = (DrawModel) savedInstanceState.getSerializable("teste");
-            drawView.reloadModel(drawModel);
-            drawView.invalidate();
-        } else
-            drawModel = new DrawModel();
-
         buildView();
 
-
+        if (savedInstanceState != null) {
+            drawModel = (DrawModel) savedInstanceState.getSerializable("drawModel");
+            drawView.reloadModel(drawModel);
+            drawView.invalidate();
+            radioButtonChecked = findViewById(savedInstanceState.getInt("radioID"));
+//            if(radioButtonChecked != null)
+            radioButtonChecked.setChecked(true);
+        }
+        else {
+            drawModel = new DrawModel();
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable("teste", drawModel);
+        outState.putSerializable("drawModel", drawModel);
+        outState.putInt("radioID", radioButtonChecked.getId());
+
+        Log.v("onSaveInstanceState", Integer.toString(radioButtonChecked.getId()));
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void buildView() {
         try {
+
+            final Toolbar toolbar = new Toolbar(this);
+            toolbar.setLogo(R.mipmap.ic_launcher);
+            toolbar.setTitle(R.string.app_name);
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setBackgroundColor(Color.BLACK);
+            //TODO: Image too big, missing overflow
+            //TODO: https://www.murrayc.com/permalink/2014/10/28/android-changing-the-toolbars-text-color-and-overflow-icon-color/
+
+
             final LinearLayout buttonPanel = new LinearLayout(this);
             buttonPanel.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -107,18 +124,22 @@ public class DrawController extends Activity {
             final RadioButton lineRadio = new RadioButton(this);
             lineRadio.setText("Line");
             lineRadio.setTag(Line.class.getName());
+            lineRadio.setId(R.id.lineRadio);
 
             final RadioButton rectRadio = new RadioButton(this);
             rectRadio.setText("Rect");
             rectRadio.setTag(Rect.class.getCanonicalName());
+            rectRadio.setId(R.id.rectRadio);
 
             final RadioButton pixelRadio = new RadioButton(this);
             pixelRadio.setText("Pixel");
             pixelRadio.setTag(Pixel.class.getCanonicalName());
+            pixelRadio.setId(R.id.pixelRadio);
 
             final RadioButton circleRadio = new RadioButton(this);
             circleRadio.setText("Circle");
             circleRadio.setTag(Circle.class.getCanonicalName());
+            circleRadio.setId(R.id.circleRadio);
 
             radioGroup.addView(lineRadio);
             radioGroup.addView(rectRadio);
@@ -136,12 +157,12 @@ public class DrawController extends Activity {
             drawPanel.setBackgroundColor(Color.parseColor("#D3F2EE"));
             drawPanel.addView(drawView);
 
+            rootPanel.addView(toolbar);
             rootPanel.addView(buttonPanel);
             rootPanel.addView(radioGroup);
             rootPanel.addView(drawPanel);
 
-            lineRadio.setChecked(true);
-            radioButtonChecked = lineRadio;
+
             ViewGroup.LayoutParams params = drawPanel.getLayoutParams();
             params.width = LinearLayout.LayoutParams.MATCH_PARENT;
             params.height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -157,7 +178,9 @@ public class DrawController extends Activity {
                 }
             });
 
+
             setContentView(rootPanel);
+            lineRadio.setChecked(true);
         } catch (Exception e) {
             Log.e("buildingerrors", "Error building Layout", e);
         }
