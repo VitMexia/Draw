@@ -13,6 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.Scanner;
+
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
@@ -43,12 +51,11 @@ public class DrawController extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-         outState.putString("CheckedRadio", radioButtonChecked.getTag().toString());
+        outState.putString("CheckedRadio", radioButtonChecked.getTag().toString());
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void buildView(){
-
+    private void buildView() {
         try {
             final LinearLayout buttonPanel = new LinearLayout(this);
             buttonPanel.setOrientation(LinearLayout.HORIZONTAL);
@@ -109,9 +116,6 @@ public class DrawController extends Activity {
             radioGroup.addView(pixelRadio);
             radioGroup.addView(circleRadio);
 
-
-            //radioButtonChecked = lineRadio;
-
             buttonPanel.addView(resetButton);
             buttonPanel.addView(loadButton);
             buttonPanel.addView(saveButton);
@@ -139,39 +143,55 @@ public class DrawController extends Activity {
             radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    radioButtonChecked =findViewById(checkedId);
+                    radioButtonChecked = findViewById(checkedId);
                     Log.v("RadioChecked", radioButtonChecked.getText().toString());
                 }
             });
 
-
             setContentView(rootPanel);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Log.e("buildingerrors", "Error building Layout", e);
         }
     }
 
-    private void onReset(){
+    private void onReset() {
+        Iterator<Figure> itr = drawModel.iterator();
 
-            drawModel.figures.clear();
-            drawView.reloadModel(drawModel);
-            drawView.invalidate();
+        while (itr.hasNext()) {
+            itr.next();
+            itr.remove();
+        }
+        drawView.reloadModel(drawModel);
+        drawView.invalidate();
     }
 
-    private void onLoad(){
-        //TODO: onLoad
+    private void onLoad() {
+        try (FileInputStream fileInputStream = openFileInput("drawingSaved.txt");
+             Scanner input = new Scanner(fileInputStream)
+        ) {
+            drawModel.load(input);
+        } catch (IOException e) {
+            Log.e("IoError", "ProblemSaving", e);
+        }
+        drawView.reloadModel(drawModel);
+        drawView.invalidate();
+
     }
 
-    private void onSave(){
-        //TODO: onSave
+    private void onSave() {
+        try (FileOutputStream outputStream = openFileOutput("drawingSaved.txt", MODE_PRIVATE);
+             PrintWriter out = new PrintWriter(new OutputStreamWriter(outputStream))
+        ) {
+            drawModel.save(out);
+
+        } catch (IOException e) {
+            Log.e("IoError", "ProblemSaving", e);
+        }
     }
 
-    public Figure createSelectedFigure(int x, int y){
-            Figure figure  = Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
-           // drawModel.add(figure);
-            drawView.reloadModel(drawModel);
-//            drawView.reloadModel(drawModel);
+    public Figure createSelectedFigure(int x, int y) {
+        Figure figure = Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
+        drawView.reloadModel(drawModel);
         return figure;
     }
 

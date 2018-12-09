@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Line extends Figure {
 
     public static final char LETTER = 'L';
-    protected Point endPoint;
 
     public Line(int x, int y){
         super(x,y);
@@ -23,12 +22,6 @@ public class Line extends Figure {
 
     protected char getLetter(){
         return LETTER;
-    }
-
-    @Override
-    public void setEnd(int x, int y) {
-        dListener.EndPointChanged(x, y);
-        endPoint = new Point(x,y);
     }
 
     @Override

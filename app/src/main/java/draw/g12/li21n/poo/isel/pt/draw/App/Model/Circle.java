@@ -1,6 +1,5 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.Model;
 
-
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -14,8 +13,12 @@ public class Circle extends Figure {
         super(x,y);
     }
 
+    public Circle() {
+        super();
+    }
     @Override
     public void setEnd(int x, int y) {
+        super.setEnd(x, y);
         int xDist = x - startPoint.getX();
         int yDist = y - startPoint.getY();
         this.radius = (int) sqrt(xDist * xDist + yDist * yDist);
@@ -35,12 +38,10 @@ public class Circle extends Figure {
         super.load(in);
         String[] splt = in.next().trim().split("\\|");
         radius = Integer.parseInt(splt[1]);
-
     }
 
     public int getRadius(){
         return radius;
     }
-
 
 }

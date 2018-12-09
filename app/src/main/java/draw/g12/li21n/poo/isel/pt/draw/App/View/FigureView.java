@@ -11,26 +11,20 @@ import java.lang.reflect.InvocationTargetException;
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
 public abstract class FigureView {
-
     Figure figure;
     Paint paint;
 
     FigureView(Figure figure){
-        //TODO:FigureView
-
-        this.figure =figure;
+        this.figure = figure;
         paint = new Paint();
         paint.setStrokeWidth(3);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
-
-        init(figure);
     }
 
     abstract void draw(Canvas canvas);
 
     static FigureView newInstance(Figure figure){
-
         String type = figure.getClass().getName() + "View";
         type = type.replace("Model", "View");
 
@@ -51,27 +45,6 @@ public abstract class FigureView {
             Log.e("DrawDebug", "Error loading class " + type, e);
         }
 
-
        return figureView;
     }
-
-    private void init(final Figure figure){
-
-        Figure.FigureListener listener = new Figure.FigureListener() {
-            @Override
-            public void EndPointChanged(int x, int y) {
-                //TODO: EndPointChanged
-            }
-
-            @Override
-            public void PointCreated(int x, int y){
-                //TODO: PointCreated
-            }
-        };
-
-        figure.setListener(listener);
-
-
-    }
-
 }

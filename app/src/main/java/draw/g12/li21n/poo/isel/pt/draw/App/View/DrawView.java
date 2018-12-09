@@ -1,11 +1,11 @@
 package draw.g12.li21n.poo.isel.pt.draw.App.View;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import draw.g12.li21n.poo.isel.pt.draw.App.DrawController;
@@ -18,79 +18,54 @@ public class DrawView extends View {
     FigureView figureView;
     Figure figure;
     private LinkedList<FigureView> reloadFigure;
-
     DrawModel drawModel;
 
-    public DrawView(DrawController drawController){
+    public DrawView(DrawController drawController) {
         super(drawController);
         this.drawController = drawController;
         reloadFigure = new LinkedList<>();
     }
-    boolean pushed = false;
 
-    public void reloadModel(DrawModel model){
+    public void reloadModel(DrawModel model) {
         this.drawModel = model;
+        if (reloadFigure != null) reloadFigure.clear();
 
-        if(reloadFigure !=null) reloadFigure.clear();
+        Iterator<Figure> itr = drawModel.iterator();
 
-        if(model.figures.size()>0){
-            for (Figure f: model.figures) {
-                reloadFigure.add(FigureView.newInstance(f));
-            }
-
+        while (itr.hasNext()) {
+            reloadFigure.add(FigureView.newInstance(itr.next()));
         }
-
-
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if(reloadFigure!= null) {
+        if (reloadFigure != null) {
             for (FigureView f : reloadFigure) {
                 f.draw(canvas);
             }
         }
-
-        if(figureView != null)
-            figureView.draw(canvas);
-
     }
 
-
-
     @Override
-    public boolean onTouchEvent(MotionEvent event){
-        final int action = event.getAction();
-
-
-        if(action == MotionEvent.ACTION_DOWN){
-            Log.v("DrawDebug", "Down");
-            pushed  = true;
-            figure = drawController.createSelectedFigure((int)event.getX(), (int) event.getY());
-            figureView = FigureView.newInstance(figure);
-
-
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                Log.v("DrawDebug", "Down");
+                figure = drawController.createSelectedFigure((int) event.getX(), (int) event.getY());
+                figureView = FigureView.newInstance(figure);
+                drawModel.add(figure);
+                reloadFigure.add(figureView);
+                break;
+            case MotionEvent.ACTION_UP:
+                Log.v("DrawDebug", "Up");
+            case MotionEvent.ACTION_MOVE:
+                figure.setEnd((int) event.getX(), (int) event.getY());
+                invalidate();
+                Log.v("DrawDebug", "Moving");
+                break;
         }
-        else if(action == MotionEvent.ACTION_UP){
-            Log.v("DrawDebug", "Up");
-            pushed  = false;
-            figure.setEnd((int)event.getX(), (int) event.getY());
-            invalidate();
-            drawModel.add(figure);
-            //figureView = null; //necessário para o reset mas causa problemas
-
-        }
-        else if(pushed && action == MotionEvent.ACTION_MOVE){
-
-            figure.setEnd((int)event.getX(), (int) event.getY());
-
-            invalidate();
-            Log.v("DrawDebug", "Moving");
-
-        }
-
         return true;
     }
 }

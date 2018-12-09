@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DrawModel {
-    public List<Figure> figures;
+    private List<Figure> figures;
 
     public DrawModel() {
         figures = new ArrayList<>();
@@ -24,8 +24,8 @@ public class DrawModel {
         }
     }
     public void load(Scanner in) {
-        while (in.hasNextLine()) {
-            Figure figure = Figure.newInstance(in.next());
+        while (in.hasNext()) {
+            Figure figure = Figure.newInstance(in.next().charAt(0));
             figure.load(in);
             figures.add(figure);
         }

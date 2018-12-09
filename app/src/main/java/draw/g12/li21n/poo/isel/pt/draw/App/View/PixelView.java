@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 
 import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
 
-
 public class PixelView extends FigureView {
 
     PixelView(Figure figure){

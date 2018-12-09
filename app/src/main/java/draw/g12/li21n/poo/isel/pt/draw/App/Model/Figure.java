@@ -14,8 +14,7 @@ import java.util.Scanner;
 public abstract class Figure {
 
     private static final Map<Character, String> figureMap;
-    protected Point startPoint;
-    public static char LETTER;
+    protected Point startPoint, endPoint;
 
     // TODO: Verificar alternativas a inicialização estática
     static {
@@ -26,17 +25,13 @@ public abstract class Figure {
         figureMap.put(Pixel.LETTER, Objects.requireNonNull(Pixel.class.getCanonicalName()));
     }
 
-
-    protected FigureListener dListener;
-
     public interface FigureListener {
         void EndPointChanged(int x, int y);
         void PointCreated(int x, int y);
     }
 
-
     public void save(PrintWriter out) {
-        out.append(LETTER);
+        out.append(getLetter());
         startPoint.save(out);
     }
 
@@ -45,8 +40,10 @@ public abstract class Figure {
         // Args[0] empty due to splitting on "("
         setStart(Integer.parseInt(args[1]), Integer.parseInt(args[2]));
     }
-    public abstract void setEnd(int x, int y);
 
+    public void setEnd(int x, int y) {
+        endPoint = new Point(x, y);
+    }
 
     public Figure(){}
 
@@ -54,17 +51,7 @@ public abstract class Figure {
         startPoint = new Point(x,y);
     }
 
-//    public Figure(Point point){
-//        if (point == null)
-//            throw new IllegalArgumentException();
-//        startPoint = point;
-//        //endPoint = point;
-//    }
-
-    public void setListener(FigureListener figureListener) {
-        this.dListener = figureListener;
-        dListener.PointCreated(startPoint.getX(), startPoint.getY());
-    }
+    protected abstract char getLetter();
 
     public static Figure newInstance(String type, Point point) {
         return Figure.newInstance(type, point.getX(), point.getY());
