@@ -30,26 +30,29 @@ public class DrawView extends View {
 
     public void reloadModel(DrawModel model){
         this.drawModel = model;
-        reloadFigure.clear();
-        if(model.iterator().hasNext()) {
-            while (model.iterator().hasNext()) {
-                reloadFigure.add(FigureView.newInstance(model.iterator().next()));
-            }
-        }else{
 
-            invalidate();
+        if(reloadFigure !=null) reloadFigure.clear();
+
+        if(model.figures.size()>0){
+            for (Figure f: model.figures) {
+                reloadFigure.add(FigureView.newInstance(f));
+            }
+
         }
 
+
     }
-//    public DrawView(Context context) {
-//        super(context);
-//    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(reloadFigure != null && reloadFigure.size()>0)
-            reloadFigure.iterator().next().draw(canvas);
+
+        if(reloadFigure!= null) {
+            for (FigureView f : reloadFigure) {
+                f.draw(canvas);
+            }
+        }
+
         if(figureView != null)
             figureView.draw(canvas);
 
@@ -67,26 +70,27 @@ public class DrawView extends View {
             pushed  = true;
             figure = drawController.createSelectedFigure((int)event.getX(), (int) event.getY());
             figureView = FigureView.newInstance(figure);
-//            reloadModel(drawModel);
+
 
         }
         else if(action == MotionEvent.ACTION_UP){
             Log.v("DrawDebug", "Up");
             pushed  = false;
-
-            //  draw.ldrawables.add(toDraw);
+            figure.setEnd((int)event.getX(), (int) event.getY());
+            invalidate();
+            drawModel.add(figure);
+            //figureView = null; //necessário para o reset mas causa problemas
 
         }
         else if(pushed && action == MotionEvent.ACTION_MOVE){
 
             figure.setEnd((int)event.getX(), (int) event.getY());
-//            reloadModel(drawModel);
 
-
+            invalidate();
             Log.v("DrawDebug", "Moving");
 
         }
-//        reloadModel(drawController.drawModel);
+
         return true;
     }
 }

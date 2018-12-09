@@ -154,9 +154,9 @@ public class DrawController extends Activity {
 
     private void onReset(){
 
-            while(drawModel.iterator().hasNext())
-                drawModel.iterator().remove();
+            drawModel.figures.clear();
             drawView.reloadModel(drawModel);
+            drawView.invalidate();
     }
 
     private void onLoad(){
@@ -169,7 +169,7 @@ public class DrawController extends Activity {
 
     public Figure createSelectedFigure(int x, int y){
             Figure figure  = Figure.newInstance(radioButtonChecked.getTag().toString(), x, y);
-            drawModel.add(figure);
+           // drawModel.add(figure);
             drawView.reloadModel(drawModel);
 //            drawView.reloadModel(drawModel);
         return figure;
