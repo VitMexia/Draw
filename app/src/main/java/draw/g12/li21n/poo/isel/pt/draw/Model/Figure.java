@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App.Model;
+package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 
 import android.util.Log;
@@ -17,7 +17,7 @@ public abstract class Figure implements Serializable {
     private static final Map<Character, String> figureMap;
     protected Point startPoint, endPoint;
 
-    // TODO: Verificar alternativas a inicialização estática
+
     static {
         figureMap = new HashMap<>();
         figureMap.put(Line.LETTER, Objects.requireNonNull(Line.class.getCanonicalName()));

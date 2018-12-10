@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App.View;
+package draw.g12.li21n.poo.isel.pt.draw.View;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,7 +8,7 @@ import android.util.Log;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
 
 public abstract class FigureView {
     Figure figure;

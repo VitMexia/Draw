@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App;
+package draw.g12.li21n.poo.isel.pt.draw;
 
 
 import android.annotation.SuppressLint;
@@ -22,14 +22,13 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Circle;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Line;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Pixel;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Rect;
-import draw.g12.li21n.poo.isel.pt.draw.App.View.DrawView;
-import draw.g12.li21n.poo.isel.pt.draw.R;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Circle;
+import draw.g12.li21n.poo.isel.pt.draw.Model.DrawModel;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Line;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Pixel;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Rect;
+import draw.g12.li21n.poo.isel.pt.draw.View.DrawView;
 
 
 public class DrawController extends Activity {
@@ -61,6 +60,8 @@ public class DrawController extends Activity {
         }
     }
 
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -79,12 +80,12 @@ public class DrawController extends Activity {
             toolbar.setTitle(R.string.app_name);
             toolbar.setTitleTextColor(Color.WHITE);
             toolbar.setBackgroundColor(Color.BLACK);
-            //TODO: Image too big, missing overflow
-            //TODO: https://www.murrayc.com/permalink/2014/10/28/android-changing-the-toolbars-text-color-and-overflow-icon-color/
+            toolbar.getContext().setTheme(R.style.Theme_AppCompat_DayNight_DarkActionBar);
 
 
             final LinearLayout buttonPanel = new LinearLayout(this);
             buttonPanel.setOrientation(LinearLayout.HORIZONTAL);
+
 
             final Button resetButton = new Button(this);
             resetButton.setText("RESET");

@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App.Model;
+package draw.g12.li21n.poo.isel.pt.draw.Model;
 
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -35,8 +35,8 @@ public class Point implements Serializable {
         out.append(" (" + getX() + "," + getY() + ")");
     }
 
-    public void load(Scanner in) {
-        // TODO: load
-    }
+//    public void load(Scanner in) {
+//        // TODO: load - not used
+//    }
 
 }

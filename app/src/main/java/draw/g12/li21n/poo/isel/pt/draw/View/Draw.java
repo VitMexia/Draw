@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App.View;
+package draw.g12.li21n.poo.isel.pt.draw.View;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,7 +9,7 @@ import android.view.View;
 
 import java.util.LinkedList;
 
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
 
 
 public class Draw extends View {

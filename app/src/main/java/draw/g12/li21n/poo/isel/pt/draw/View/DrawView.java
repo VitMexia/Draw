@@ -1,4 +1,4 @@
-package draw.g12.li21n.poo.isel.pt.draw.App.View;
+package draw.g12.li21n.poo.isel.pt.draw.View;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import draw.g12.li21n.poo.isel.pt.draw.App.DrawController;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.DrawModel;
-import draw.g12.li21n.poo.isel.pt.draw.App.Model.Figure;
+import draw.g12.li21n.poo.isel.pt.draw.DrawController;
+import draw.g12.li21n.poo.isel.pt.draw.Model.DrawModel;
+import draw.g12.li21n.poo.isel.pt.draw.Model.Figure;
 
 public class DrawView extends View implements Serializable {
 
