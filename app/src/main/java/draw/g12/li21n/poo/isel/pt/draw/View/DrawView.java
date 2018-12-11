@@ -61,7 +61,6 @@ public class DrawView extends View implements Serializable {
                 break;
             case MotionEvent.ACTION_UP:
                 Log.v("DrawDebug", "Up");
-                break;
             case MotionEvent.ACTION_MOVE:
                 figure.setEnd((int) event.getX(), (int) event.getY());
                 invalidate();
